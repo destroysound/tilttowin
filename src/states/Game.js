@@ -10,6 +10,7 @@ export default class extends Phaser.State {
 
   create() {
     game.physics.startSystem(Phaser.Physics.P2JS);
+    game.physics.p2.setImpactEvents(true)
 
     const bannerText = lang.text('welcome')
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
@@ -20,19 +21,30 @@ export default class extends Phaser.State {
 
     banner.padding.set(10, 16)
     banner.anchor.setTo(0.5)
+    this.playerCollisionGroup = game.physics.p2.createCollisionGroup()
+    this.enemyCollisionGroup = game.physics.p2.createCollisionGroup()
+
+    this.enemies = game.add.group()
+    this.enemies.enableBody = true
+
+    this.enemies.physicsBodyType = Phaser.Physics.P2JS
 
     this.enemy = new Enemy({
       game: this.game,
       x: this.world.centerX+200,
       y: this.world.centerY,
-      asset: 'mushroom'
+      asset: 'mushroom',
+      enemyGroup: this.enemyCollisionGroup,
+      playerGroup: this.playerCollisionGroup
     })
 
     this.player = new Player({
       game: this.game,
       x: this.world.centerX,
       y: this.world.centerY,
-      asset: 'mushroom'
+      asset: 'mushroom',
+      enemyGroup: this.enemyCollisionGroup,
+      playerGroup: this.playerCollisionGroup
     })
 
     this.game.add.existing(this.enemy)
@@ -40,6 +52,7 @@ export default class extends Phaser.State {
   }
 
   render() {
+
 //    if (__DEV__) {
 //      this.game.debug.spriteInfo(this.mushroom, 32, 32)
 //    }
