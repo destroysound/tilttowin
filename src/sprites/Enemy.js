@@ -1,7 +1,8 @@
 import Phaser from 'phaser'
 import { rgbToHex} from '../utils'
+import Entity from '../sprites/entity'
 
-export default class extends Phaser.Sprite {
+export default class extends Entity {
   constructor ({ game, x, y, asset, enemyGroup, playerGroup}) {
     super(game, x, y, asset)
     this.anchor.setTo(0.5)
@@ -10,15 +11,7 @@ export default class extends Phaser.Sprite {
     this.body.setCollisionGroup(enemyGroup)
     this.body.collides([enemyGroup, playerGroup])
     this.healthbar = this.addChild(game.add.graphics(0,0))
-    this.health = 100
-    this.maxHealth = 100
     this.updateHealthBar()
-  }
-
-  takeDamage (damageAmount) {
-    this.health -= damageAmount
-    this.updateHealthBar()
-    console.log("taking damage: health is " + this.health)
   }
 
   updateHealthBar() {

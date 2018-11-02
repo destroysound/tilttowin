@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
+import Entity from '../sprites/entity'
 
-export default class extends Phaser.Sprite {
+export default class extends Entity {
   constructor ({ game, x, y, asset, enemyGroup, playerGroup }) {
     super(game, x, y, asset)
     this.anchor.setTo(0.5)
@@ -17,12 +18,6 @@ export default class extends Phaser.Sprite {
     this.collidingTimer = 0;
     this.healthbar = this.addChild(game.make.graphics(-32, -40))
     this.healthbar.cropEnabled = true
-    this.health = 100
-    this.maxHealth = 100
-  }
-
-  takeDamage (damageAmount) {
-
   }
 
   hitEnemy(body1, body2) {
